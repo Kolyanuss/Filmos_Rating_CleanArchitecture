@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Filmos_Rating_CleanArchitecture.Domain.Entities
+﻿namespace Filmos_Rating_CleanArchitecture.Domain.Entities
 {
     public class Films
     {
