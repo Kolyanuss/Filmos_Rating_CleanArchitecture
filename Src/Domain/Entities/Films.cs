@@ -8,7 +8,7 @@ namespace Filmos_Rating_CleanArchitecture.Domain.Entities
 {
     public class Films
     {
-        public int id_film { get; set; }
-        public int name_film { get; set; }
+        public int Id_film { get; set; }
+        public int Name_film { get; set; }
     }
 }
