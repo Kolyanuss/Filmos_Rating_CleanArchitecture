@@ -1,0 +1,23 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+    <RootNamespace>Filmos_Rating_CleanArchitecture.Application</RootNamespace>
+    <AssemblyName>Filmos_Rating_CleanArchitecture.Application</AssemblyName>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Folder Include="Films\Commands\UpsertFilms\" />
+    <Folder Include="Films\Queries\GetFilmsList\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="MediatR" Version="10.0.1" />
+    <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="10.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Domain\Domain.csproj" />
+  </ItemGroup>
+
+</Project>
