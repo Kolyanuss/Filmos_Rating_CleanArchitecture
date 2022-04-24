@@ -6,13 +6,13 @@ namespace Filmos_Rating_CleanArchitecture.Domain.Entities
     {
         public Comments()
         {
-            Films = new HashSet<Films>();
-            Users = new HashSet<Users>();
+            Films = new HashSet<Film>();
+            Users = new HashSet<User>();
         }
 
         public int Id_comment { get; set; }
-        public int Text { get; set; }
-        public ICollection<Films> Films { get; private set; }
-        public ICollection<Users> Users { get; private set; }
+        public string Text { get; set; }
+        public ICollection<Film> Films { get; private set; }
+        public ICollection<User> Users { get; private set; }
     }
 }
