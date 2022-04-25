@@ -1,87 +1,38 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Filmos_Rating_CleanArchitecture.Application.Film.Queries.GetFilmsList;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace Filmos_Rating_CleanArchitecture.WebUI.Controllers
 {
-    public class FilmsController : Controller
+    public class FilmsController : BaseController
     {
-        // GET: FilmsController
-        public ActionResult Index()
+        [HttpGet]
+        [AllowAnonymous]
+        public async Task<ActionResult<FilmsListVm>> GetAll()
         {
-            return View();
+            return Ok(await Mediator.Send(new GetFilmsListQuery()));
         }
-
-        // GET: FilmsController/Details/5
-        public ActionResult Details(int id)
-        {
-            return View();
-        }
-
-        // GET: FilmsController/Create
-        public ActionResult Create()
-        {
-            return View();
-        }
-
-        // POST: FilmsController/Create
+/*
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesDefaultResponseType]
+        public async Task<IActionResult> Upsert(UpsertFilmsCommand command)
         {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
+            var id = await Mediator.Send(command);
+
+            return Ok(id);
         }
 
-        // GET: FilmsController/Edit/5
-        public ActionResult Edit(int id)
+        [HttpDelete("{id}")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        public async Task<IActionResult> Delete(int id)
         {
-            return View();
-        }
+            await Mediator.Send(new DeleteFilmsCommand { Id = id });
 
-        // POST: FilmsController/Edit/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        // GET: FilmsController/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
-
-        // POST: FilmsController/Delete/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
+            return NoContent();
+        }*/
     }
 }

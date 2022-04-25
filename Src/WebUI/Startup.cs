@@ -1,12 +1,11 @@
-using MediatR;
+using Filmos_Rating_CleanArchitecture.Application;
+using Filmos_Rating_CleanArchitecture.Persistence;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
-using System.Reflection;
 
 namespace Filmos_Rating_CleanArchitecture.WebUI
 {
@@ -22,8 +21,8 @@ namespace Filmos_Rating_CleanArchitecture.WebUI
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddAutoMapper(Assembly.GetExecutingAssembly());
-            services.AddMediatR(Assembly.GetExecutingAssembly());
+            services.AddPersistence(Configuration);
+            services.AddApplication();
 
             services.AddControllers(options =>
             {
@@ -50,7 +49,7 @@ namespace Filmos_Rating_CleanArchitecture.WebUI
 
             app.UseRouting();
 
-            //app.UseAuthorization();
+            app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {

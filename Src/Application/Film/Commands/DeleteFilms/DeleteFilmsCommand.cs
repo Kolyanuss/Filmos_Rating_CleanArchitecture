@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Filmos_Rating_CleanArchitecture.Application.Films.Commands.DeleteFilms
+namespace Filmos_Rating_CleanArchitecture.Application.Film.Commands.DeleteFilms
 {
     public class DeleteFilmsCommand : IRequest
     {

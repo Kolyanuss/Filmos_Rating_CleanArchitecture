@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Filmos_Rating_CleanArchitecture.Application.Films.Queries.GetFilmsList
+namespace Filmos_Rating_CleanArchitecture.Application.Film.Queries.GetFilmsList
 {
     public class FilmsListVm
     {
