@@ -1,8 +1,9 @@
 ﻿using AutoMapper;
-using AutoMapper.QueryableExtensions;
-using Filmos_Rating_CleanArchitecture.Application.Common.Interfaces;
+using Filmos_Rating_CleanArchitecture.Application.Common;
+using Filmos_Rating_CleanArchitecture.Domain.Entities;
 using MediatR;
-using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
+using MongoDB.Driver;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
@@ -11,33 +12,28 @@ namespace Filmos_Rating_CleanArchitecture.Application.Film.Queries.GetFilmsList
 {
     public class GetUsersListQueryHandler : IRequestHandler<GetFilmsListQuery, FilmsListVm>
     {
-        private readonly IFilmosDbContext _context;
         private readonly IMapper _mapper;
+        private readonly IMongoCollection<Films> _collection;
 
-        public GetUsersListQueryHandler(IFilmosDbContext context, IMapper mapper)
+        public GetUsersListQueryHandler(IOptions<FilmosDatabaseSettings> dbSettings, IMapper mapper)
         {
-            _context = context;
             _mapper = mapper;
+
+            var mongoClient = new MongoClient(dbSettings.Value.ConnectionString);
+
+            var mongoDatabase = mongoClient.GetDatabase(dbSettings.Value.DatabaseName);
+
+            _collection = mongoDatabase.GetCollection<Films>("Films");
         }
 
         public async Task<FilmsListVm> Handle(GetFilmsListQuery request, CancellationToken cancellationToken)
         {
-            /*var films = await _context.Films
-                .ProjectTo<FilmsLookupDto>(_mapper.ConfigurationProvider)
-                .ToListAsync(cancellationToken);*/
-
-            var tempfilm = new FilmsLookupDto();
-            tempfilm.Id = 0;
-            tempfilm.Name = "It is test";
-            var temp = new List<FilmsLookupDto>
-            {
-                tempfilm
-            };
+            var List = await _collection.Find(_ => true).ToListAsync();
+            var ListDto = _mapper.Map<List<FilmsLookupDto>>(List);
 
             var vm = new FilmsListVm
             {
-                //Films = films
-                Films = temp
+                Films = ListDto
             };
 
             return vm;

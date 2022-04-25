@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Filmos_Rating_CleanArchitecture.Persistence
+namespace Filmos_Rating_CleanArchitecture.Application.Common
 {
     public class FilmosDatabaseSettings
     {
@@ -12,6 +12,5 @@ namespace Filmos_Rating_CleanArchitecture.Persistence
 
         public string DatabaseName { get; set; } = null!;
 
-        public string CollectionName { get; set; } = null!;
     }
 }

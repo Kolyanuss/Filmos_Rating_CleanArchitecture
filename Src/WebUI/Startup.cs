@@ -1,4 +1,5 @@
 using Filmos_Rating_CleanArchitecture.Application;
+using Filmos_Rating_CleanArchitecture.Application.Common;
 using Filmos_Rating_CleanArchitecture.Persistence;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -21,8 +22,11 @@ namespace Filmos_Rating_CleanArchitecture.WebUI
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddPersistence(Configuration);
+            //services.AddPersistence(Configuration);
             services.AddApplication();
+
+            services.Configure<FilmosDatabaseSettings>(
+                Configuration.GetSection("FilmosDatabase"));
 
             services.AddControllers(options =>
             {

@@ -1,7 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Filmos_Rating_CleanArchitecture.Application.Common.Interfaces;
 
 namespace Filmos_Rating_CleanArchitecture.Persistence
 {
@@ -12,7 +11,7 @@ namespace Filmos_Rating_CleanArchitecture.Persistence
             /*services.AddDbContext<FilmosDbContext>(options =>
                 options.UseSqlServer(configuration.GetConnectionString("NorthwindDatabase")));*/
 
-            services.AddScoped<IFilmosDbContext>(provider => provider.GetService<FilmosDbContext>());
+            //services.AddScoped<IFilmosDbContext>(provider => provider.GetService<FilmosDbContext>());
 
             return services;
         }

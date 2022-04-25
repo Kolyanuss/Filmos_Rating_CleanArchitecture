@@ -7,6 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Folder Include="Common\Interfaces\" />
     <Folder Include="User\Commands\DeleteFilms\" />
     <Folder Include="User\Commands\UpsertFilms\" />
     <Folder Include="Film\Commands\UpsertFilms\" />
@@ -19,7 +20,6 @@
     <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="10.0.1" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="5.0.16" />
     <PackageReference Include="MongoDB.Driver" Version="2.15.0" />
-    <PackageReference Include="MongoDB.Driver.GridFS" Version="2.15.0" />
   </ItemGroup>
 
   <ItemGroup>

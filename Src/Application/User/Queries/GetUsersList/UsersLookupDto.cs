@@ -6,7 +6,7 @@ namespace Filmos_Rating_CleanArchitecture.Application.User.Queries.GetUsersList
 {
     public class UsersLookupDto : IMapFrom<Users>
     {
-        public int Id { get; set; }
+        public string? Id { get; set; }
         public string Name { get; set; }
         public bool Is_admin { get; set; }
 
