@@ -10,12 +10,12 @@ using System.Threading.Tasks;
 
 namespace Filmos_Rating_CleanArchitecture.Application.Film.Queries.GetFilmsList
 {
-    public class GetUsersListQueryHandler : IRequestHandler<GetFilmsListQuery, FilmsListVm>
+    public class GetFilmsListQueryHandler : IRequestHandler<GetFilmsListQuery, FilmsListVm>
     {
         private readonly IMapper _mapper;
         private readonly IMongoCollection<Films> _collection;
 
-        public GetUsersListQueryHandler(IOptions<FilmosDatabaseSettings> dbSettings, IMapper mapper)
+        public GetFilmsListQueryHandler(IOptions<FilmosDatabaseSettings> dbSettings, IMapper mapper)
         {
             _mapper = mapper;
 

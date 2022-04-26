@@ -1,5 +1,7 @@
-﻿using Filmos_Rating_CleanArchitecture.Application.Common;
+﻿using AutoMapper;
+using Filmos_Rating_CleanArchitecture.Application.Common;
 using Filmos_Rating_CleanArchitecture.Application.Common.Exceptions;
+using Filmos_Rating_CleanArchitecture.Application.Film.Queries.GetFilmsList;
 using Filmos_Rating_CleanArchitecture.Domain.Entities;
 using MediatR;
 using Microsoft.Extensions.Options;
@@ -7,18 +9,21 @@ using MongoDB.Driver;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Filmos_Rating_CleanArchitecture.Application.Film.Commands.DeleteFilms
+namespace Filmos_Rating_CleanArchitecture.Application.Film.Queries.GetFilmById
 {
-    public class DeleteFilmsCommand : IRequest
+    public class GetFilmQuery : IRequest<FilmsLookupDto>
     {
         public string? Id { get; set; }
 
-        public class DeleteFilmsCommandHandler : IRequestHandler<DeleteFilmsCommand>
+        public class GetFilmQueryHandler : IRequestHandler<GetFilmQuery, FilmsLookupDto>
         {
+            private readonly IMapper _mapper;
             private readonly IMongoCollection<Films> _collection;
 
-            public DeleteFilmsCommandHandler(IOptions<FilmosDatabaseSettings> dbSettings)
+            public GetFilmQueryHandler(IOptions<FilmosDatabaseSettings> dbSettings, IMapper mapper)
             {
+                _mapper = mapper;
+
                 var mongoClient = new MongoClient(dbSettings.Value.ConnectionString);
 
                 var mongoDatabase = mongoClient.GetDatabase(dbSettings.Value.DatabaseName);
@@ -26,19 +31,16 @@ namespace Filmos_Rating_CleanArchitecture.Application.Film.Commands.DeleteFilms
                 _collection = mongoDatabase.GetCollection<Films>("Films");
             }
 
-            public async Task<Unit> Handle(DeleteFilmsCommand request, CancellationToken cancellationToken)
+            public async Task<FilmsLookupDto> Handle(GetFilmQuery request, CancellationToken cancellationToken)
             {
                 var entity = await _collection.Find(x => x.Id_film == request.Id).FirstOrDefaultAsync();
-                //var entity = await _collection.FindAsync(x => x.Id_film == request.Id);
-
                 if (entity == null)
                 {
                     throw new NotFoundException(nameof(Films), request.Id);
                 }
+                var Dto = _mapper.Map<FilmsLookupDto>(entity);
 
-                var filter = Builders<Films>.Filter.Eq(x => x.Id_film, request.Id);
-                await _collection.DeleteOneAsync(filter);
-                return Unit.Value;
+                return Dto;
             }
         }
     }

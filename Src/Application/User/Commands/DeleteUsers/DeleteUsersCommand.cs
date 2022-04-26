@@ -7,36 +7,36 @@ using MongoDB.Driver;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Filmos_Rating_CleanArchitecture.Application.Film.Commands.DeleteFilms
+namespace Filmos_Rating_CleanArchitecture.Application.User.Commands.DeleteUsers
 {
-    public class DeleteFilmsCommand : IRequest
+    public class DeleteUsersCommand : IRequest
     {
         public string? Id { get; set; }
 
-        public class DeleteFilmsCommandHandler : IRequestHandler<DeleteFilmsCommand>
+        public class DeleteUsersCommandHandler : IRequestHandler<DeleteUsersCommand>
         {
-            private readonly IMongoCollection<Films> _collection;
+            private readonly IMongoCollection<Users> _collection;
 
-            public DeleteFilmsCommandHandler(IOptions<FilmosDatabaseSettings> dbSettings)
+            public DeleteUsersCommandHandler(IOptions<FilmosDatabaseSettings> dbSettings)
             {
                 var mongoClient = new MongoClient(dbSettings.Value.ConnectionString);
 
                 var mongoDatabase = mongoClient.GetDatabase(dbSettings.Value.DatabaseName);
 
-                _collection = mongoDatabase.GetCollection<Films>("Films");
+                _collection = mongoDatabase.GetCollection<Users>("Users");
             }
 
-            public async Task<Unit> Handle(DeleteFilmsCommand request, CancellationToken cancellationToken)
+            public async Task<Unit> Handle(DeleteUsersCommand request, CancellationToken cancellationToken)
             {
-                var entity = await _collection.Find(x => x.Id_film == request.Id).FirstOrDefaultAsync();
+                var entity = await _collection.Find(x => x.Id_user == request.Id).FirstOrDefaultAsync();
                 //var entity = await _collection.FindAsync(x => x.Id_film == request.Id);
 
                 if (entity == null)
                 {
-                    throw new NotFoundException(nameof(Films), request.Id);
+                    throw new NotFoundException(nameof(Users), request.Id);
                 }
 
-                var filter = Builders<Films>.Filter.Eq(x => x.Id_film, request.Id);
+                var filter = Builders<Users>.Filter.Eq(x => x.Id_user, request.Id);
                 await _collection.DeleteOneAsync(filter);
                 return Unit.Value;
             }
