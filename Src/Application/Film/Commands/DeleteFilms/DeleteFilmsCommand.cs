@@ -29,7 +29,6 @@ namespace Filmos_Rating_CleanArchitecture.Application.Film.Commands.DeleteFilms
             public async Task<Unit> Handle(DeleteFilmsCommand request, CancellationToken cancellationToken)
             {
                 var entity = await _collection.Find(x => x.Id_film == request.Id).FirstOrDefaultAsync();
-                //var entity = await _collection.FindAsync(x => x.Id_film == request.Id);
 
                 if (entity == null)
                 {
